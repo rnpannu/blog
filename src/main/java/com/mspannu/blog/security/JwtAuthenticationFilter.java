@@ -18,6 +18,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @Slf4j
+// TODO: Implement refresh tokens
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final AuthenticationService authenticationService;
@@ -59,62 +60,3 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 }
-
-//import com.mspannu.blog.services.AuthenticationService;
-//import jakarta.servlet.FilterChain;
-//import jakarta.servlet.ServletException;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
-//import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.web.filter.OncePerRequestFilter;
-//
-//import java.io.IOException;
-//
-//@RequiredArgsConstructor
-//@Slf4j
-//public class JwtAuthenticationFilter extends OncePerRequestFilter {
-//
-//    private final AuthenticationService authenticationService;
-//
-//    @Override
-//    protected void doFilterInternal(HttpServletRequest request,
-//                                    HttpServletResponse response,
-//                                    FilterChain filterChain) throws ServletException, IOException {
-//        try {
-//            String token = extractToken(request);
-//            if (token != null) {
-//                UserDetails userDetails = authenticationService.validateToken(token);
-//
-//                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
-//                        null,
-//                        userDetails.getAuthorities());
-//
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//                if (userDetails instanceof BlogUserDetails) {
-//                    request.setAttribute("blogUserDetails", ((BlogUserDetails) userDetails).getId());
-//                    //                BlogUserDetails blogUserDetails = (BlogUserDetails) userDetails;
-//
-//                }
-//            }
-//        } catch (Exception ex) {
-//            // Just don't authenticate user
-//            log.warn("Received invalid auth token");
-//        }
-//
-//        filterChain.doFilter(request, response);
-//    }
-//
-//    private String extractToken(HttpServletRequest request) {
-//        String bearerToken = request.getHeader("Authorization");
-//        // Jwt will be provided prefixed with Bearer
-//        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-//            return bearerToken.substring(7);
-//        }
-//        return null;
-//    }
-//}
